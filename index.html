@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Jobs Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #E8F0F5;
+            padding: 0;
+            min-height: 100vh;
+            color: #000000;
+        }
+
+        :root {
+            --nn-dark-blue: #003366;
+            --nn-blue: #0066CC;
+            --nn-light-blue: #D6E8F5;
+            --nn-lighter-blue: #E8F0F5;
+            --nn-gray: #333333;
+            --nn-light-gray: #F5F5F5;
+            --nn-white: #FFFFFF;
+            --nn-red: #DC3545;
+            --nn-green: #28A745;
+            --nn-orange: #FFA500;
+            --nn-purple: #6F42C1;
+            --text-dark: #000000;
+        }
+
+        /* ================================================================
+           LOGIN SCREEN
+        ================================================================ */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--nn-lighter-blue);
+        }
+
+        .login-top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            padding: 16px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .login-card {
+            background: var(--nn-white);
+            border: 2px solid var(--nn-light-blue);
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 40px 36px;
+            margin-top: 70px;
+            box-shadow: 0 4px 24px rgba(0,51,102,0.10);
+        }
+
+        .login-card h2 {
+            color: var(--nn-dark-blue);
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .login-card .subtitle {
+            color: #555;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 7px;
+            color: #000;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #CCC;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            color: #000;
+            background: var(--nn-white);
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--nn-blue);
+        }
+
+        .form-group input.input-error {
+            border-color: var(--nn-red);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 44px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--nn-gray);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .error-message {
+            display: none;
+            background: #FFF0F0;
+            border: 2px solid var(--nn-red);
+            color: var(--nn-red);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            padding: 14px;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: var(--nn-blue);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .login-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Success overlay */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,51,102,0.88);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--nn-white);
+            gap: 16px;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-icon {
+            font-size: 56px;
+        }
+
+        .success-overlay h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .success-overlay p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* ================================================================
+           DASHBOARD SCREEN
+        ================================================================ */
+        #dashboardScreen {
+            display: none;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--nn-white);
+            padding: 0;
+        }
+
+        .header-bar {
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--nn-white);
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-user span {
+            font-size: 14px;
+            color: var(--nn-light-blue);
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 2px solid var(--nn-light-blue);
+            color: var(--nn-white);
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--nn-white);
+            padding: 25px;
+            border: 2px solid var(--nn-light-blue);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--nn-dark-blue);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #000000;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--nn-dark-blue);
+        }
+
+        .dashboard-header h2 {
+            color: var(--nn-dark-blue);
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .filter-section {
+            width: 100%;
+            background: var(--nn-lighter-blue);
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid var(--nn-light-blue);
+        }
+
+        .filter-section h3 {
+            color: var(--nn-dark-blue);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .filter-section label {
+            color: #000000;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #CCC;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            background: var(--nn-white);
+            color: #000000;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--nn-blue);
+        }
+
+        .filter-btn {
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover { background: var(--nn-blue); }
+
+        .reset-filter-btn {
+            background: var(--nn-gray);
+            color: var(--nn-white);
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            margin-left: 10px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .reset-filter-btn:hover { background: #5a6268; }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .export-btn {
+            background: var(--nn-green);
+            color: var(--nn-white);
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .export-btn:hover { background: #218838; }
+
+        .refresh-btn {
+            background: var(--nn-blue);
+            color: var(--nn-white);
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .refresh-btn:hover { background: #0056b3; }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: var(--nn-white);
+        }
+
+        .history-btn { background: var(--nn-purple); }
+        .history-btn:hover { background: #5a32a3; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--nn-white);
+            border: 2px solid var(--nn-light-blue);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--nn-light-blue);
+            font-size: 13px;
+            color: #000000;
+        }
+
+        th {
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) { background: var(--nn-lighter-blue); }
+        tr:hover { background: var(--nn-light-blue); }
+
+        .status-badge {
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            color: var(--nn-white);
+        }
+
+        .badge-planned    { background: var(--nn-purple); }
+        .badge-in-progress { background: var(--nn-orange); }
+        .badge-completed  { background: var(--nn-green); }
+
+        .user-thumbnail {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: var(--nn-white);
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .user-with-thumbnail {
+            display: inline-flex;
+            align-items: center;
+            color: #000000;
+        }
+
+        .unique-number-badge {
+            display: inline-block;
+            background: var(--nn-blue);
+            color: var(--nn-white);
+            padding: 3px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .thumbnail-QKRM { background: #003366; }
+        .thumbnail-USRJ { background: #336699; }
+        .thumbnail-IOJN { background: #6699CC; }
+        .thumbnail-IVRS { background: #0066CC; }
+        .thumbnail-SYDQ { background: #0099FF; }
+        .thumbnail-NMJP { background: #FF6B9D; }
+        .thumbnail-NUMT { background: #28A745; }
+        .thumbnail-RDVA { background: #9966CC; }
+        .thumbnail-GVMR { background: #FF6633; }
+        .thumbnail-HMDP { background: #9933CC; }
+        .thumbnail-HKPT { background: #00CCCC; }
+        .thumbnail-GSHV { background: #FF66CC; }
+
+        /* ── Modals ── */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--nn-white);
+            margin: 3% auto;
+            padding: 0;
+            border: 2px solid var(--nn-dark-blue);
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: var(--nn-dark-blue);
+            color: var(--nn-white);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--nn-white);
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .modal-body {
+            padding: 30px;
+            color: #000000;
+        }
+
+        .modal-body p  { color: #000000; margin-bottom: 10px; }
+        .modal-body strong { color: #000000; }
+
+        .close {
+            color: var(--nn-white);
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 20px;
+        }
+
+        .close:hover { color: var(--nn-light-blue); }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cancel-btn {
+            background: var(--nn-gray);
+            color: var(--nn-white);
+            padding: 12px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .cancel-btn:hover { background: #5a6268; }
+
+        .activity-history {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--nn-lighter-blue);
+            border: 2px solid var(--nn-light-blue);
+        }
+
+        .activity-history h3 {
+            color: var(--nn-dark-blue);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .activity-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--nn-white);
+            border-left: 4px solid var(--nn-blue);
+        }
+
+        .activity-item .activity-user  { font-weight: bold; color: #000000; }
+        .activity-item .activity-time  { font-size: 12px; color: #000000; }
+        .activity-item .activity-action { margin-top: 5px; color: #000000; font-weight: bold; }
+        .activity-item div { color: #000000; }
+
+        .loading-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--nn-blue);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .header-bar  { flex-direction: column; gap: 15px; }
+            .main-content { padding: 20px; }
+            .export-buttons { flex-direction: column; }
+            .login-card { margin: 70px 16px 16px; padding: 28px 20px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════════════════════════════════ -->
+<div id="loginScreen">
+    <div class="login-top-bar">All Jobs Dashboard</div>
+
+    <div class="login-card">
+        <h2>🔐 Sign In</h2>
+        <p class="subtitle">Enter your credentials to access the dashboard.</p>
+
+        <div class="error-message" id="errorMessage">
+            <span>⚠️</span>
+            <span id="errorText">Invalid username or password.</span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+            <div class="form-group">
+                <label for="username">USERNAME</label>
+                <input type="text" id="username" placeholder="Enter your username"
+                       autocomplete="username" required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">PASSWORD</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password"
+                           autocomplete="current-password" required />
+                    <button type="button" class="toggle-password"
+                            onclick="togglePassword()" title="Show/hide password">👁️</button>
+                </div>
+            </div>
+
+            <button class="login-btn" id="loginBtn" type="submit">
+                <div class="spinner" id="spinner"></div>
+                <span id="loginBtnText">LOGIN</span>
+            </button>
+        </form>
+
+        <div class="login-footer">Novo Nordisk · All Jobs Dashboard · View Only</div>
+    </div>
+</div>
+
+<!-- Success overlay (shared) -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-icon">✅</div>
+    <h2>Login Successful!</h2>
+    <p id="successMsg">Loading dashboard…</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DASHBOARD SCREEN
+════════════════════════════════════════════════════════════════ -->
+<div id="dashboardScreen">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header-bar">
+            <div class="header-title">All Jobs Dashboard - View Only</div>
+            <div class="header-user">
+                <span id="loggedInUserLabel">👤</span>
+                <button class="logout-btn" onclick="logout()">🚪 LOGOUT</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="statTotal">0</div>
+                    <div class="stat-label">TOTAL JOBS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statPlanned">0</div>
+                    <div class="stat-label">PLANNED</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statInProgress">0</div>
+                    <div class="stat-label">IN PROGRESS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statCompleted">0</div>
+                    <div class="stat-label">COMPLETED</div>
+                </div>
+            </div>
+
+            <!-- Dashboard header -->
+            <div class="dashboard-header">
+                <h2>All Jobs</h2>
+                <div class="export-buttons">
+                    <button class="refresh-btn" onclick="refreshData()">🔄 REFRESH</button>
+                    <button class="export-btn" onclick="exportToCSV()">EXPORT CSV</button>
+                    <button class="export-btn" onclick="exportToExcel()">EXPORT EXCEL</button>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h3>FILTER DATA</h3>
+                <div class="filter-grid">
+                    <div>
+                        <label>Congress:</label>
+                        <select id="filterCongress">
+                            <option value="">All</option>
+                            <option value="ACC">ACC</option>
+                            <option value="ESC-HF">ESC - HF</option>
+                            <option value="ECO">ECO</option>
+                            <option value="EASL">EASL</option>
+                            <option value="ERA">ERA</option>
+                            <option value="ADA">ADA</option>
+                            <option value="5K@ADA">5K @ADA</option>
+                            <option value="AAIC">AAIC</option>
+                            <option value="ESC">ESC</option>
+                            <option value="ESPE">ESPE</option>
+                            <option value="EASD">EASD</option>
+                            <option value="5K@EASD">5K @EASD</option>
+                            <option value="AHA">AHA</option>
+                            <option value="AASLD">AASLD</option>
+                            <option value="OTHERS">OTHERS</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Status:</label>
+                        <select id="filterStatus">
+                            <option value="">All</option>
+                            <option value="Planned">Planned</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Requestor:</label>
+                        <select id="filterRequestor">
+                            <option value="">All</option>
+                            <option value="QKRM">QKRM</option>
+                            <option value="USRJ">USRJ</option>
+                            <option value="IOJN">IOJN</option>
+                            <option value="IVRS">IVRS</option>
+                            <option value="SYDQ">SYDQ</option>
+                            <option value="NMJP">NMJP</option>
+                            <option value="NUMT">NUMT</option>
+                            <option value="RDVA">RDVA</option>
+                            <option value="GVMR">GVMR</option>
+                            <option value="HMDP">HMDP</option>
+                            <option value="HKPT">HKPT</option>
+                            <option value="GSHV">GSHV</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Submitted By:</label>
+                        <select id="filterSubmittedBy">
+                            <option value="">All</option>
+                            <option value="HKPT">HKPT</option>
+                            <option value="NUMT">NUMT</option>
+                            <option value="IVRS">IVRS</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="filter-btn" onclick="applyFilters()">APPLY FILTERS</button>
+                <button class="reset-filter-btn" onclick="resetFilters()">RESET</button>
+            </div>
+
+            <div id="loadingMessage" class="loading-message">Loading data...</div>
+
+            <div style="overflow-x: auto;">
+                <table id="dashboardTable" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>UNIQUE #</th>
+                            <th>JOB ID</th>
+                            <th>PROJECT NAME</th>
+                            <th>CONGRESS</th>
+                            <th>REQUESTOR</th>
+                            <th>SUBMITTED BY</th>
+                            <th>STATUS</th>
+                            <th>START DATE</th>
+                            <th>END DATE</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboardBody"></tbody>
+                </table>
+            </div>
+
+        </div><!-- /main-content -->
+    </div><!-- /container -->
+</div><!-- /dashboardScreen -->
+
+<!-- ════════════════════════════════════════════════════════════════
+     HISTORY MODAL
+════════════════════════════════════════════════════════════════ -->
+<div id="historyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>JOB DETAILS</h2>
+            <span class="close" onclick="closeHistoryModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div style="background: var(--nn-light-blue); padding: 20px; margin-bottom: 20px;">
+                <h3 style="color: var(--nn-dark-blue); margin-bottom: 10px; font-weight: bold;">JOB INFORMATION</h3>
+                <p><strong>Unique Number:</strong> <span id="historyUniqueNumber" style="color: var(--nn-blue); font-weight: bold;"></span></p>
+                <p><strong>Job ID:</strong>        <span id="historyJobId"></span></p>
+                <p><strong>Project:</strong>       <span id="historyProjectName"></span></p>
+                <p><strong>Congress:</strong>      <span id="historyCongress"></span></p>
+                <p><strong>Requestor:</strong>     <span id="historyRequestor"></span></p>
+                <p><strong>Submitted By:</strong>  <span id="historySubmittedBy"></span></p>
+                <p><strong>Current Status:</strong><span id="historyCurrentStatus"></span></p>
+                <p><strong>Start Date:</strong>    <span id="historyStartDate"></span></p>
+                <p><strong>End Date:</strong>      <span id="historyEndDate"></span></p>
+                <p><strong>Description:</strong>   <span id="historyDescription"></span></p>
+            </div>
+
+            <div class="activity-history">
+                <h3>ACTIVITY TIMELINE</h3>
+                <div id="activityHistoryList"></div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="cancel-btn" onclick="closeHistoryModal()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════════ -->
+<script>
+    // ── Config ──────────────────────────────────────────────────────────────────
+    const CONFIG = {
+        API_KEY      : '$2a$10$TSxWjP8KeL2sCsGcfRtI.uxlpOLk2c2yTg3Qn8loL1z5d8OHN87fO',
+        DATA_BIN_ID  : '69511fc2ae596e708fb5ccf4',   // jobs data
+        LOGIN_BIN_ID : '69522bf5ae596e708fb77ae9'    // credentials
+    };
+
+    let projectData  = [];
+    let filteredData = [];
+
+    // ════════════════════════════════════════════════════════════════
+    //  SCREEN SWITCHING
+    // ════════════════════════════════════════════════════════════════
+    function showDashboard(username) {
+        document.getElementById('loginScreen').style.display    = 'none';
+        document.getElementById('dashboardScreen').style.display = 'block';
+        document.getElementById('loggedInUserLabel').textContent = '👤 ' + username;
+        loadFromJSONBin();
+    }
+
+    function showLogin() {
+        document.getElementById('dashboardScreen').style.display = 'none';
+        document.getElementById('loginScreen').style.display     = 'flex';
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  LOGIN
+    // ════════════════════════════════════════════════════════════════
+    function togglePassword() {
+        const input = document.getElementById('password');
+        input.type  = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function showError(msg) {
+        const box  = document.getElementById('errorMessage');
+        document.getElementById('errorText').textContent = msg;
+        box.classList.add('show');
+        document.getElementById('username').classList.add('input-error');
+        document.getElementById('password').classList.add('input-error');
+    }
+
+    function hideError() {
+        document.getElementById('errorMessage').classList.remove('show');
+        document.getElementById('username').classList.remove('input-error');
+        document.getElementById('password').classList.remove('input-error');
+    }
+
+    function setLoading(loading) {
+        const btn     = document.getElementById('loginBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('loginBtnText');
+        btn.disabled            = loading;
+        spinner.style.display   = loading ? 'block' : 'none';
+        btnText.textContent     = loading ? 'Signing in…' : 'LOGIN';
+    }
+
+    async function handleLogin(event) {
+        event.preventDefault();
+        hideError();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            showError('Please enter both username and password.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(
+                `https://api.jsonbin.io/v3/b/${CONFIG.LOGIN_BIN_ID}/latest`,
+                { method: 'GET', headers: { 'X-Master-Key': CONFIG.API_KEY } }
+            );
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const result = await response.json();
+            const users  = result?.record?.users;
+
+            if (!Array.isArray(users) || users.length === 0) {
+                showError('Could not load user data. Please try again later.');
+                setLoading(false);
+                return;
+            }
+
+            const match = users.find(
+                u => u.username.toLowerCase() === username.toLowerCase()
+                  && u.password === password
+            );
+
+            if (match) {
+                // Store session
+                sessionStorage.setItem('loggedInUser', match.username);
+                sessionStorage.setItem('loginTime',    new Date().toISOString());
+
+                // Show success overlay then switch to dashboard
+                const overlay = document.getElementById('successOverlay');
+                overlay.classList.add('show');
+
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                    showDashboard(match.username);
+                }, 1500);
+
+            } else {
+                showError('Invalid username or password. Please try again.');
+                setLoading(false);
+            }
+
+        } catch (err) {
+            console.error('Login error:', err);
+            showError('Network error. Please check your connection and try again.');
+            setLoading(false);
+        }
+    }
+
+    function logout() {
+        sessionStorage.removeItem('loggedInUser');
+        sessionStorage.removeItem('loginTime');
+        // Clear fields
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('loginBtn').disabled = false;
+        document.getElementById('loginBtnText').textContent = 'LOGIN';
+        showLogin();
+    }
+
+    // Clear errors while typing
+    document.getElementById('username').addEventListener('input', hideError);
+    document.getElementById('password').addEventListener('input', hideError);
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD – DATA & HELPERS
+    // ════════════════════════════════════════════════════════════════
+    function getUserThumbnail(username) {
+        if (!username) return '';
+        const initials = username.substring(0, 2);
+        return `<span class="user-thumbnail thumbnail-${username}">${initials}</span>`;
+    }
+
+    function getUserWithThumbnail(username) {
+        if (!username) return '-';
+        return `<span class="user-with-thumbnail">${getUserThumbnail(username)}${username}</span>`;
+    }
+
+    function updateStats() {
+        const total      = projectData.length;
+        const planned    = projectData.filter(p => p.status === 'Planned').length;
+        const inProgress = projectData.filter(p => p.status === 'In Progress').length;
+        const completed  = projectData.filter(p => p.status === 'Completed').length;
+
+        document.getElementById('statTotal').textContent      = total;
+        document.getElementById('statPlanned').textContent    = planned;
+        document.getElementById('statInProgress').textContent = inProgress;
+        document.getElementById('statCompleted').textContent  = completed;
+    }
+
+    function formatDateDisplay(dateString) {
+        return new Date(dateString).toLocaleDateString('en-GB');
+    }
+
+    function formatTimestamp(timestamp) {
+        return new Date(timestamp).toLocaleString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+    }
+
+    function formatDate(dateString) {
+        const d = new Date(dateString);
+        return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function getStatusBadge(status) {
+        const map = {
+            'Planned'    : 'badge-planned',
+            'In Progress': 'badge-in-progress',
+            'Completed'  : 'badge-completed'
+        };
+        return `<span class="status-badge ${map[status] || ''}">${status}</span>`;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD – LOAD DATA
+    // ════════════════════════════════════════════════════════════════
+    async function loadFromJSONBin() {
+        try {
+            document.getElementById('loadingMessage').style.display  = 'block';
+            document.getElementById('dashboardTable').style.display  = 'none';
+
+            const response = await fetch(
+                `https://api.jsonbin.io/v3/b/${CONFIG.DATA_BIN_ID}/latest`,
+                { method: 'GET', headers: { 'X-Master-Key': CONFIG.API_KEY } }
+            );
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.record && result.record.projects) {
+                    projectData = result.record.projects;
+                    updateStats();
+                    resetFilters();
+                    document.getElementById('loadingMessage').style.display = 'none';
+                    document.getElementById('dashboardTable').style.display = 'table';
+                } else {
+                    projectData = [];
+                    document.getElementById('loadingMessage').textContent = 'No data available';
+                }
+            } else {
+                projectData = [];
+                document.getElementById('loadingMessage').textContent = 'Failed to load data';
+            }
+        } catch (error) {
+            console.error('Error loading data:', error);
+            projectData = [];
+            document.getElementById('loadingMessage').textContent = 'Error loading data';
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD – HISTORY MODAL
+    // ════════════════════════════════════════════════════════════════
+    function displayActivityHistory(project) {
+        const historyList = document.getElementById('activityHistoryList');
+        historyList.innerHTML = '';
+
+        if (!project.activityHistory || project.activityHistory.length === 0) {
+            historyList.innerHTML = '<p style="color:#000;">No activity recorded yet.</p>';
+            return;
+        }
+
+        const sorted = [...project.activityHistory].sort(
+            (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+
+        sorted.forEach(activity => {
+            const item = document.createElement('div');
+            item.className = 'activity-item';
+            item.innerHTML = `
+                <div>
+                    ${getUserThumbnail(activity.user)}
+                    <span class="activity-user">${activity.user}</span>
+                    <span class="activity-time">${formatTimestamp(activity.timestamp)}</span>
+                </div>
+                <div class="activity-action"><strong>${activity.action}</strong></div>
+                ${activity.notes ? `<div style="margin-top:5px;color:#000;">${activity.notes}</div>` : ''}
+            `;
+            historyList.appendChild(item);
+        });
+    }
+
+    function openHistoryModal(uniqueNumber) {
+        const project = projectData.find(p => p.uniqueNumber === uniqueNumber);
+        if (!project) { alert('Project not found!'); return; }
+
+        document.getElementById('historyUniqueNumber').textContent  = project.uniqueNumber;
+        document.getElementById('historyJobId').textContent         = project.jobId;
+        document.getElementById('historyProjectName').textContent   = project.projectName;
+        document.getElementById('historyCongress').textContent      = project.congressName;
+        document.getElementById('historyRequestor').textContent     = project.requestorName;
+        document.getElementById('historySubmittedBy').textContent   = project.submittedBy;
+        document.getElementById('historyCurrentStatus').textContent = project.status;
+        document.getElementById('historyStartDate').textContent     = formatDateDisplay(project.startDate);
+        document.getElementById('historyEndDate').textContent       = formatDateDisplay(project.endDate);
+        document.getElementById('historyDescription').textContent   = project.description;
+
+        displayActivityHistory(project);
+        document.getElementById('historyModal').style.display = 'block';
+    }
+
+    function closeHistoryModal() {
+        document.getElementById('historyModal').style.display = 'none';
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD – FILTERS
+    // ════════════════════════════════════════════════════════════════
+    function applyFilters() {
+        const congress    = document.getElementById('filterCongress').value;
+        const status      = document.getElementById('filterStatus').value;
+        const requestor   = document.getElementById('filterRequestor').value;
+        const submittedBy = document.getElementById('filterSubmittedBy').value;
+
+        filteredData = projectData.filter(p => {
+            let match = true;
+            if (congress    && p.congressName  !== congress)    match = false;
+            if (status      && p.status        !== status)      match = false;
+            if (requestor   && p.requestorName !== requestor)   match = false;
+            if (submittedBy && p.submittedBy   !== submittedBy) match = false;
+            return match;
+        });
+
+        loadDashboard();
+    }
+
+    function resetFilters() {
+        document.getElementById('filterCongress').value    = '';
+        document.getElementById('filterStatus').value      = '';
+        document.getElementById('filterRequestor').value   = '';
+        document.getElementById('filterSubmittedBy').value = '';
+        filteredData = projectData;
+        loadDashboard();
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD – RENDER TABLE
+    // ════════════════════════════════════════════════════════════════
+    function getActionButtons(project) {
+        return `<button class="action-btn history-btn"
+                    onclick="openHistoryModal('${project.uniqueNumber}')">View Details</button>`;
+    }
+
+    function loadDashboard() {
+        const tbody = document.getElementById('dashboardBody');
+        tbody.innerHTML = '';
+
+        const anyFilter =
+            document.getElementById('filterCongress').value    ||
+            document.getElementById('filterStatus').value      ||
+            document.getElementById('filterRequestor').value   ||
+            document.getElementById('filterSubmittedBy').value;
+
+        const dataToDisplay = anyFilter ? filteredData : projectData;
+
+        if (dataToDisplay.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10"
+                style="text-align:center;color:#000;">No data available</td></tr>`;
+            return;
+        }
+
+        const sorted = [...dataToDisplay].sort(
+            (a, b) => new Date(b.submittedDate) - new Date(a.submittedDate)
+        );
+
+        sorted.forEach(project => {
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td><span class="unique-number-badge">${project.uniqueNumber}</span></td>
+                <td>${project.jobId}</td>
+                <td>${project.projectName}</td>
+                <td>${project.congressName}</td>
+                <td>${getUserWithThumbnail(project.requestorName)}</td>
+                <td>${getUserWithThumbnail(project.submittedBy)}</td>
+                <td>${getStatusBadge(project.status)}</td>
+                <td>${formatDateDisplay(project.startDate)}</td>
+                <td>${formatDateDisplay(project.endDate)}</td>
+                <td style="min-width:150px;">${getActionButtons(project)}</td>
+            `;
+        });
+    }
+
+    function refreshData() { loadFromJSONBin(); }
+
+    // ════════════════════════════════════════════════════════════════
+    //  EXPORT
+    // ════════════════════════════════════════════════════════════════
+    function exportToCSV() {
+        if (projectData.length === 0) { alert('No data to export'); return; }
+
+        const headers = ['Unique Number','Job ID','Project Name','Congress',
+                         'Requestor','Submitted By','Status','Start Date','End Date','Description'];
+        const csv = [
+            headers.join(','),
+            ...projectData.map(p => [
+                p.uniqueNumber, `"${p.jobId}"`, `"${p.projectName}"`,
+                p.congressName, p.requestorName, p.submittedBy,
+                p.status, p.startDate, p.endDate, `"${p.description}"`
+            ].join(','))
+        ].join('\n');
+
+        const a = document.createElement('a');
+        a.href     = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        a.download = `all_jobs_${formatDate(new Date())}.csv`;
+        a.click();
+    }
+
+    function exportToExcel() {
+        if (projectData.length === 0) { alert('No data to export'); return; }
+
+        const headers = ['Unique Number','Job ID','Project','Congress',
+                         'Requestor','Submitted By','Status','Start Date','End Date'];
+        let html = '<table><thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+        projectData.forEach(p => {
+            html += `<tr>
+                <td>${p.uniqueNumber}</td><td>${p.jobId}</td>
+                <td>${p.projectName}</td><td>${p.congressName}</td>
+                <td>${p.requestorName}</td><td>${p.submittedBy}</td>
+                <td>${p.status}</td><td>${p.startDate}</td><td>${p.endDate}</td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+
+        const a = document.createElement('a');
+        a.href     = URL.createObjectURL(new Blob([html], { type: 'application/vnd.ms-excel' }));
+        a.download = `all_jobs_${formatDate(new Date())}.xls`;
+        a.click();
+    }
+
+    // Close modal on outside click
+    window.onclick = e => {
+        if (e.target === document.getElementById('historyModal'))
+            document.getElementById('historyModal').style.display = 'none';
+    };
+
+    // ════════════════════════════════════════════════════════════════
+    //  INIT – check existing session on page load
+    // ════════════════════════════════════════════════════════════════
+    window.addEventListener('load', () => {
+        const saved = sessionStorage.getItem('loggedInUser');
+        if (saved) {
+            showDashboard(saved);   // already logged in → go straight to dashboard
+        } else {
+            showLogin();            // show login screen
+        }
+    });
+</script>
+</body>
+</html>
