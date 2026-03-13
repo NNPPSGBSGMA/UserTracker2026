@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,206 +40,202 @@
         ================================================================ */
         #loginScreen {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: var(--nn-lighter-blue);
-        }
-
-        .login-top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--nn-dark-blue);
-            color: var(--nn-white);
-            padding: 16px 40px;
-            font-size: 20px;
-            font-weight: bold;
-            z-index: 100;
+            background: radial-gradient(ellipse at 70% 50%, #1a3a8f 0%, #0a1f5c 40%, #060f2e 100%);
         }
 
         .login-card {
-            background: var(--nn-white);
-            border: 2px solid var(--nn-light-blue);
+            background: #ffffff;
+            border-radius: 18px;
             width: 100%;
-            max-width: 440px;
-            padding: 40px 40px 36px;
-            margin-top: 70px;
-            box-shadow: 0 4px 24px rgba(0,51,102,0.10);
+            max-width: 420px;
+            padding: 44px 44px 36px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .login-card h2 {
-            color: var(--nn-dark-blue);
-            font-size: 22px;
-            font-weight: bold;
+        .login-card-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0a1f5c;
+            text-align: center;
+            letter-spacing: 0.3px;
             margin-bottom: 6px;
         }
 
-        .login-card .subtitle {
-            color: #555;
+        .login-card-subtitle {
             font-size: 13px;
-            margin-bottom: 28px;
+            color: #6b7a99;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 400;
         }
 
-        .form-group {
+        .login-form { width: 100%; }
+
+        .login-form-group {
             margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            font-size: 13px;
-            margin-bottom: 7px;
-            color: #000;
-        }
-
-        .form-group input {
             width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #CCC;
-            font-size: 14px;
+        }
+
+        .login-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0a1f5c;
+            margin-bottom: 8px;
+        }
+
+        .login-form-group input {
+            width: 100%;
+            padding: 13px 22px;
+            border: 2px solid #c8d8f0;
+            border-radius: 50px;
+            font-size: 15px;
             font-family: Arial, sans-serif;
-            color: #000;
-            background: var(--nn-white);
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
+            color: #0a1f5c;
+            background: #f4f8ff;
             outline: none;
-            border-color: var(--nn-blue);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            text-align: center;
+            letter-spacing: 2px;
         }
 
-        .form-group input.input-error {
-            border-color: var(--nn-red);
+        .login-form-group input#loginPassword {
+            text-align: left;
+            letter-spacing: 0.5px;
         }
 
-        .password-wrapper {
-            position: relative;
+        .login-form-group input::placeholder {
+            color: #a0aec0;
+            letter-spacing: 3px;
+            text-align: center;
         }
 
-        .password-wrapper input {
-            padding-right: 44px;
+        .login-form-group input#loginPassword::placeholder {
+            letter-spacing: 0.5px;
+            text-align: left;
         }
 
-        .toggle-password {
+        .login-form-group input:focus {
+            border-color: #4a7fd4;
+            box-shadow: 0 0 0 3px rgba(74, 127, 212, 0.18);
+            background: #ffffff;
+        }
+
+        .login-form-group input.input-error {
+            border-color: #e53e3e;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+        }
+
+        .pw-wrapper { position: relative; }
+
+        .pw-wrapper input {
+            padding-right: 48px;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-pw {
             position: absolute;
-            right: 12px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 18px;
-            color: var(--nn-gray);
+            font-size: 17px;
+            color: #6b7a99;
             padding: 0;
             line-height: 1;
         }
 
-        .error-message {
+        .login-error {
             display: none;
-            background: #FFF0F0;
-            border: 2px solid var(--nn-red);
-            color: var(--nn-red);
-            padding: 12px 16px;
+            width: 100%;
+            background: #fff5f5;
+            border: 1.5px solid #e53e3e;
+            border-radius: 10px;
+            color: #c53030;
+            padding: 10px 16px;
             font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
             align-items: center;
             gap: 8px;
         }
 
-        .error-message.show {
-            display: flex;
-        }
+        .login-error.show { display: flex; }
 
-        .login-btn {
+        .login-submit-btn {
             width: 100%;
-            background: var(--nn-dark-blue);
-            color: var(--nn-white);
-            padding: 14px;
+            background: #0a1f5c;
+            color: #ffffff;
+            padding: 15px;
             border: none;
+            border-radius: 50px;
             font-size: 15px;
-            font-weight: bold;
+            font-weight: 700;
             font-family: Arial, sans-serif;
             cursor: pointer;
             letter-spacing: 0.5px;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-top: 6px;
         }
 
-        .login-btn:hover:not(:disabled) {
-            background: var(--nn-blue);
-        }
+        .login-submit-btn:hover:not(:disabled) { background: #1a3a8f; }
+        .login-submit-btn:active:not(:disabled) { transform: scale(0.98); }
+        .login-submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
 
-        .login-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .spinner {
-            width: 18px;
-            height: 18px;
-            border: 3px solid rgba(255,255,255,0.4);
+        .login-spinner {
+            width: 17px;
+            height: 17px;
+            border: 3px solid rgba(255,255,255,0.35);
             border-top-color: #fff;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
             display: none;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .login-footer {
-            margin-top: 28px;
-            text-align: center;
+        .login-helper {
+            margin-top: 18px;
             font-size: 12px;
-            color: #888;
+            color: #8a95a8;
+            text-align: center;
         }
 
-        /* Success overlay */
         .success-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,51,102,0.88);
+            background: rgba(6, 15, 46, 0.92);
             z-index: 999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: var(--nn-white);
+            color: #ffffff;
             gap: 16px;
         }
 
-        .success-overlay.show {
-            display: flex;
-        }
-
-        .success-icon {
-            font-size: 56px;
-        }
-
-        .success-overlay h2 {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .success-overlay p {
-            font-size: 14px;
-            opacity: 0.85;
-        }
+        .success-overlay.show { display: flex; }
+        .success-icon  { font-size: 58px; }
+        .success-overlay h2 { font-size: 24px; font-weight: 800; }
+        .success-overlay p  { font-size: 14px; opacity: 0.8; }
 
         /* ================================================================
            DASHBOARD SCREEN
         ================================================================ */
-        #dashboardScreen {
-            display: none;
-        }
+        #dashboardScreen { display: none; }
 
         .container {
             max-width: 100%;
@@ -284,15 +281,12 @@
             font-family: Arial, sans-serif;
             cursor: pointer;
             transition: background 0.2s;
+            border-radius: 4px;
         }
 
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.15);
-        }
+        .logout-btn:hover { background: rgba(255,255,255,0.15); }
 
-        .main-content {
-            padding: 40px;
-        }
+        .main-content { padding: 40px; }
 
         .quick-stats {
             display: grid;
@@ -376,10 +370,7 @@
             color: #000000;
         }
 
-        select:focus {
-            outline: none;
-            border-color: var(--nn-blue);
-        }
+        select:focus { outline: none; border-color: var(--nn-blue); }
 
         .filter-btn {
             background: var(--nn-dark-blue);
@@ -410,10 +401,7 @@
 
         .reset-filter-btn:hover { background: #5a6268; }
 
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        .export-buttons { display: flex; gap: 10px; }
 
         .export-btn {
             background: var(--nn-green);
@@ -487,9 +475,9 @@
             color: var(--nn-white);
         }
 
-        .badge-planned    { background: var(--nn-purple); }
+        .badge-planned     { background: var(--nn-purple); }
         .badge-in-progress { background: var(--nn-orange); }
-        .badge-completed  { background: var(--nn-green); }
+        .badge-completed   { background: var(--nn-green); }
 
         .user-thumbnail {
             width: 32px;
@@ -521,6 +509,7 @@
             border-radius: 3px;
         }
 
+        /* ── Thumbnail colours ── */
         .thumbnail-QKRM { background: #003366; }
         .thumbnail-USRJ { background: #336699; }
         .thumbnail-IOJN { background: #6699CC; }
@@ -533,8 +522,9 @@
         .thumbnail-HMDP { background: #9933CC; }
         .thumbnail-HKPT { background: #00CCCC; }
         .thumbnail-GSHV { background: #FF66CC; }
+        .thumbnail-NHSM { background: #E67E22; } /* ← NEW */
 
-        /* ── Modals ── */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -572,12 +562,8 @@
             font-weight: bold;
         }
 
-        .modal-body {
-            padding: 30px;
-            color: #000000;
-        }
-
-        .modal-body p  { color: #000000; margin-bottom: 10px; }
+        .modal-body { padding: 30px; color: #000000; }
+        .modal-body p      { color: #000000; margin-bottom: 10px; }
         .modal-body strong { color: #000000; }
 
         .close {
@@ -590,11 +576,7 @@
 
         .close:hover { color: var(--nn-light-blue); }
 
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
 
         .cancel-btn {
             background: var(--nn-gray);
@@ -629,8 +611,8 @@
             border-left: 4px solid var(--nn-blue);
         }
 
-        .activity-item .activity-user  { font-weight: bold; color: #000000; }
-        .activity-item .activity-time  { font-size: 12px; color: #000000; }
+        .activity-item .activity-user   { font-weight: bold; color: #000000; }
+        .activity-item .activity-time   { font-size: 12px; color: #000000; }
         .activity-item .activity-action { margin-top: 5px; color: #000000; font-weight: bold; }
         .activity-item div { color: #000000; }
 
@@ -642,73 +624,78 @@
             font-weight: bold;
         }
 
-        /* ── Responsive ── */
         @media (max-width: 768px) {
-            .header-bar  { flex-direction: column; gap: 15px; }
-            .main-content { padding: 20px; }
+            .header-bar     { flex-direction: column; gap: 15px; }
+            .main-content   { padding: 20px; }
             .export-buttons { flex-direction: column; }
-            .login-card { margin: 70px 16px 16px; padding: 28px 20px 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .login-card { margin: 16px; padding: 32px 22px 28px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════
      LOGIN SCREEN
-════════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════════════ -->
 <div id="loginScreen">
-    <div class="login-top-bar">All Jobs Dashboard</div>
-
     <div class="login-card">
-        <h2>🔐 Sign In</h2>
-        <p class="subtitle">Enter your credentials to access the dashboard.</p>
+        <div class="login-card-title">All Jobs Dashboard</div>
+        <div class="login-card-subtitle">Novo Nordisk · Congress Tracker · View Only</div>
 
-        <div class="error-message" id="errorMessage">
+        <div class="login-error" id="loginError">
             <span>⚠️</span>
-            <span id="errorText">Invalid username or password.</span>
+            <span id="loginErrorText">Invalid username or password.</span>
         </div>
 
-        <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
-            <div class="form-group">
-                <label for="username">USERNAME</label>
-                <input type="text" id="username" placeholder="Enter your username"
-                       autocomplete="username" required />
+        <form class="login-form" id="loginForm"
+              onsubmit="handleLogin(event)" autocomplete="off">
+
+            <div class="login-form-group">
+                <label for="loginUsername">Enter Your 4-Letter Initials:</label>
+                <input type="text" id="loginUsername"
+                       placeholder="X X X X"
+                       maxlength="4" autocomplete="off" required />
             </div>
 
-            <div class="form-group">
-                <label for="password">PASSWORD</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password" placeholder="Enter your password"
+            <div class="login-form-group">
+                <label for="loginPassword">Password:</label>
+                <div class="pw-wrapper">
+                    <input type="password" id="loginPassword"
+                           placeholder="Enter your password"
                            autocomplete="current-password" required />
-                    <button type="button" class="toggle-password"
-                            onclick="togglePassword()" title="Show/hide password">👁️</button>
+                    <button type="button" class="toggle-pw"
+                            onclick="togglePw()" title="Show / hide">👁️</button>
                 </div>
             </div>
 
-            <button class="login-btn" id="loginBtn" type="submit">
-                <div class="spinner" id="spinner"></div>
-                <span id="loginBtnText">LOGIN</span>
+            <button class="login-submit-btn" id="loginBtn" type="submit">
+                <div class="login-spinner" id="loginSpinner"></div>
+                <span id="loginBtnText">Login to Dashboard</span>
             </button>
         </form>
 
-        <div class="login-footer">Novo Nordisk · All Jobs Dashboard · View Only</div>
+        <div class="login-helper">
+            Please enter your assigned 4-letter code and unique password
+        </div>
     </div>
 </div>
 
-<!-- Success overlay (shared) -->
+<!-- Success overlay -->
 <div class="success-overlay" id="successOverlay">
     <div class="success-icon">✅</div>
     <h2>Login Successful!</h2>
-    <p id="successMsg">Loading dashboard…</p>
+    <p>Loading dashboard…</p>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════
      DASHBOARD SCREEN
-════════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════════════ -->
 <div id="dashboardScreen">
     <div class="container">
 
-        <!-- Header -->
         <div class="header-bar">
             <div class="header-title">All Jobs Dashboard - View Only</div>
             <div class="header-user">
@@ -719,7 +706,7 @@
 
         <div class="main-content">
 
-            <!-- Quick Stats -->
+            <!-- Stats -->
             <div class="quick-stats">
                 <div class="stat-card">
                     <div class="stat-number" id="statTotal">0</div>
@@ -744,12 +731,12 @@
                 <h2>All Jobs</h2>
                 <div class="export-buttons">
                     <button class="refresh-btn" onclick="refreshData()">🔄 REFRESH</button>
-                    <button class="export-btn" onclick="exportToCSV()">EXPORT CSV</button>
-                    <button class="export-btn" onclick="exportToExcel()">EXPORT EXCEL</button>
+                    <button class="export-btn"  onclick="exportToCSV()">EXPORT CSV</button>
+                    <button class="export-btn"  onclick="exportToExcel()">EXPORT EXCEL</button>
                 </div>
             </div>
 
-            <!-- Filter Section -->
+            <!-- Filters -->
             <div class="filter-section">
                 <h3>FILTER DATA</h3>
                 <div class="filter-grid">
@@ -771,6 +758,7 @@
                             <option value="5K@EASD">5K @EASD</option>
                             <option value="AHA">AHA</option>
                             <option value="AASLD">AASLD</option>
+                            <option value="NHSM">NHSM</option>  <!-- ← NEW -->
                             <option value="OTHERS">OTHERS</option>
                         </select>
                     </div>
@@ -799,6 +787,7 @@
                             <option value="HMDP">HMDP</option>
                             <option value="HKPT">HKPT</option>
                             <option value="GSHV">GSHV</option>
+                            <option value="NHSM">NHSM</option>  <!-- ← NEW -->
                         </select>
                     </div>
                     <div>
@@ -811,13 +800,13 @@
                         </select>
                     </div>
                 </div>
-                <button class="filter-btn" onclick="applyFilters()">APPLY FILTERS</button>
+                <button class="filter-btn"       onclick="applyFilters()">APPLY FILTERS</button>
                 <button class="reset-filter-btn" onclick="resetFilters()">RESET</button>
             </div>
 
             <div id="loadingMessage" class="loading-message">Loading data...</div>
 
-            <div style="overflow-x: auto;">
+            <div style="overflow-x:auto;">
                 <table id="dashboardTable" style="display:none;">
                     <thead>
                         <tr>
@@ -837,13 +826,13 @@
                 </table>
             </div>
 
-        </div><!-- /main-content -->
-    </div><!-- /container -->
-</div><!-- /dashboardScreen -->
+        </div>
+    </div>
+</div>
 
-<!-- ════════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════
      HISTORY MODAL
-════════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════════════ -->
 <div id="historyModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -851,18 +840,22 @@
             <span class="close" onclick="closeHistoryModal()">&times;</span>
         </div>
         <div class="modal-body">
-            <div style="background: var(--nn-light-blue); padding: 20px; margin-bottom: 20px;">
-                <h3 style="color: var(--nn-dark-blue); margin-bottom: 10px; font-weight: bold;">JOB INFORMATION</h3>
-                <p><strong>Unique Number:</strong> <span id="historyUniqueNumber" style="color: var(--nn-blue); font-weight: bold;"></span></p>
-                <p><strong>Job ID:</strong>        <span id="historyJobId"></span></p>
-                <p><strong>Project:</strong>       <span id="historyProjectName"></span></p>
-                <p><strong>Congress:</strong>      <span id="historyCongress"></span></p>
-                <p><strong>Requestor:</strong>     <span id="historyRequestor"></span></p>
-                <p><strong>Submitted By:</strong>  <span id="historySubmittedBy"></span></p>
-                <p><strong>Current Status:</strong><span id="historyCurrentStatus"></span></p>
-                <p><strong>Start Date:</strong>    <span id="historyStartDate"></span></p>
-                <p><strong>End Date:</strong>      <span id="historyEndDate"></span></p>
-                <p><strong>Description:</strong>   <span id="historyDescription"></span></p>
+            <div style="background:var(--nn-light-blue);padding:20px;margin-bottom:20px;">
+                <h3 style="color:var(--nn-dark-blue);margin-bottom:10px;font-weight:bold;">
+                    JOB INFORMATION
+                </h3>
+                <p><strong>Unique Number:</strong>
+                   <span id="historyUniqueNumber"
+                         style="color:var(--nn-blue);font-weight:bold;"></span></p>
+                <p><strong>Job ID:</strong>         <span id="historyJobId"></span></p>
+                <p><strong>Project:</strong>        <span id="historyProjectName"></span></p>
+                <p><strong>Congress:</strong>       <span id="historyCongress"></span></p>
+                <p><strong>Requestor:</strong>      <span id="historyRequestor"></span></p>
+                <p><strong>Submitted By:</strong>   <span id="historySubmittedBy"></span></p>
+                <p><strong>Current Status:</strong> <span id="historyCurrentStatus"></span></p>
+                <p><strong>Start Date:</strong>     <span id="historyStartDate"></span></p>
+                <p><strong>End Date:</strong>       <span id="historyEndDate"></span></p>
+                <p><strong>Description:</strong>    <span id="historyDescription"></span></p>
             </div>
 
             <div class="activity-history">
@@ -877,25 +870,22 @@
     </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════
      JAVASCRIPT
-════════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════════════ -->
 <script>
-    // ── Config ──────────────────────────────────────────────────────────────────
     const CONFIG = {
         API_KEY      : '$2a$10$TSxWjP8KeL2sCsGcfRtI.uxlpOLk2c2yTg3Qn8loL1z5d8OHN87fO',
-        DATA_BIN_ID  : '69511fc2ae596e708fb5ccf4',   // jobs data
-        LOGIN_BIN_ID : '69522bf5ae596e708fb77ae9'    // credentials
+        DATA_BIN_ID  : '69511fc2ae596e708fb5ccf4',
+        LOGIN_BIN_ID : '69522bf5ae596e708fb77ae9'
     };
 
     let projectData  = [];
     let filteredData = [];
 
-    // ════════════════════════════════════════════════════════════════
-    //  SCREEN SWITCHING
-    // ════════════════════════════════════════════════════════════════
+    // ── Screen switching ─────────────────────────────────────────────
     function showDashboard(username) {
-        document.getElementById('loginScreen').style.display    = 'none';
+        document.getElementById('loginScreen').style.display     = 'none';
         document.getElementById('dashboardScreen').style.display = 'block';
         document.getElementById('loggedInUserLabel').textContent = '👤 ' + username;
         loadFromJSONBin();
@@ -906,121 +896,111 @@
         document.getElementById('loginScreen').style.display     = 'flex';
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  LOGIN
-    // ════════════════════════════════════════════════════════════════
-    function togglePassword() {
-        const input = document.getElementById('password');
-        input.type  = input.type === 'password' ? 'text' : 'password';
+    // ── Login ────────────────────────────────────────────────────────
+    function togglePw() {
+        const inp = document.getElementById('loginPassword');
+        inp.type  = inp.type === 'password' ? 'text' : 'password';
     }
 
-    function showError(msg) {
-        const box  = document.getElementById('errorMessage');
-        document.getElementById('errorText').textContent = msg;
-        box.classList.add('show');
-        document.getElementById('username').classList.add('input-error');
-        document.getElementById('password').classList.add('input-error');
+    function showLoginError(msg) {
+        document.getElementById('loginErrorText').textContent = msg;
+        document.getElementById('loginError').classList.add('show');
+        document.getElementById('loginUsername').classList.add('input-error');
+        document.getElementById('loginPassword').classList.add('input-error');
     }
 
-    function hideError() {
-        document.getElementById('errorMessage').classList.remove('show');
-        document.getElementById('username').classList.remove('input-error');
-        document.getElementById('password').classList.remove('input-error');
+    function hideLoginError() {
+        document.getElementById('loginError').classList.remove('show');
+        document.getElementById('loginUsername').classList.remove('input-error');
+        document.getElementById('loginPassword').classList.remove('input-error');
     }
 
-    function setLoading(loading) {
-        const btn     = document.getElementById('loginBtn');
-        const spinner = document.getElementById('spinner');
-        const btnText = document.getElementById('loginBtnText');
-        btn.disabled            = loading;
-        spinner.style.display   = loading ? 'block' : 'none';
-        btnText.textContent     = loading ? 'Signing in…' : 'LOGIN';
+    function setLoginLoading(on) {
+        document.getElementById('loginBtn').disabled                  = on;
+        document.getElementById('loginSpinner').style.display         = on ? 'block' : 'none';
+        document.getElementById('loginBtnText').textContent           = on ? 'Signing in…' : 'Login to Dashboard';
     }
 
-    async function handleLogin(event) {
-        event.preventDefault();
-        hideError();
+    async function handleLogin(e) {
+        e.preventDefault();
+        hideLoginError();
 
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
+        const username = document.getElementById('loginUsername').value.trim().toUpperCase();
+        const password = document.getElementById('loginPassword').value;
 
         if (!username || !password) {
-            showError('Please enter both username and password.');
+            showLoginError('Please enter both your initials and password.');
+            return;
+        }
+        if (username.length !== 4) {
+            showLoginError('Please enter exactly 4 letters for your initials.');
             return;
         }
 
-        setLoading(true);
+        setLoginLoading(true);
 
         try {
-            const response = await fetch(
+            const res = await fetch(
                 `https://api.jsonbin.io/v3/b/${CONFIG.LOGIN_BIN_ID}/latest`,
-                { method: 'GET', headers: { 'X-Master-Key': CONFIG.API_KEY } }
+                { headers: { 'X-Master-Key': CONFIG.API_KEY } }
             );
 
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-            const result = await response.json();
+            const result = await res.json();
             const users  = result?.record?.users;
 
             if (!Array.isArray(users) || users.length === 0) {
-                showError('Could not load user data. Please try again later.');
-                setLoading(false);
+                showLoginError('Could not load user data. Please try again later.');
+                setLoginLoading(false);
                 return;
             }
 
             const match = users.find(
-                u => u.username.toLowerCase() === username.toLowerCase()
-                  && u.password === password
+                u => u.username.toUpperCase() === username && u.password === password
             );
 
             if (match) {
-                // Store session
                 sessionStorage.setItem('loggedInUser', match.username);
                 sessionStorage.setItem('loginTime',    new Date().toISOString());
 
-                // Show success overlay then switch to dashboard
                 const overlay = document.getElementById('successOverlay');
                 overlay.classList.add('show');
-
                 setTimeout(() => {
                     overlay.classList.remove('show');
                     showDashboard(match.username);
                 }, 1500);
-
             } else {
-                showError('Invalid username or password. Please try again.');
-                setLoading(false);
+                showLoginError('Invalid initials or password. Please try again.');
+                setLoginLoading(false);
             }
-
         } catch (err) {
             console.error('Login error:', err);
-            showError('Network error. Please check your connection and try again.');
-            setLoading(false);
+            showLoginError('Network error. Please check your connection.');
+            setLoginLoading(false);
         }
     }
 
     function logout() {
         sessionStorage.removeItem('loggedInUser');
         sessionStorage.removeItem('loginTime');
-        // Clear fields
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('loginBtn').disabled = false;
-        document.getElementById('loginBtnText').textContent = 'LOGIN';
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        setLoginLoading(false);
+        hideLoginError();
         showLogin();
     }
 
-    // Clear errors while typing
-    document.getElementById('username').addEventListener('input', hideError);
-    document.getElementById('password').addEventListener('input', hideError);
+    document.getElementById('loginUsername').addEventListener('input', function () {
+        this.value = this.value.toUpperCase();
+        hideLoginError();
+    });
+    document.getElementById('loginPassword').addEventListener('input', hideLoginError);
 
-    // ════════════════════════════════════════════════════════════════
-    //  DASHBOARD – DATA & HELPERS
-    // ════════════════════════════════════════════════════════════════
+    // ── Dashboard helpers ────────────────────────────────────────────
     function getUserThumbnail(username) {
         if (!username) return '';
-        const initials = username.substring(0, 2);
-        return `<span class="user-thumbnail thumbnail-${username}">${initials}</span>`;
+        return `<span class="user-thumbnail thumbnail-${username}">${username.substring(0,2)}</span>`;
     }
 
     function getUserWithThumbnail(username) {
@@ -1029,31 +1009,24 @@
     }
 
     function updateStats() {
-        const total      = projectData.length;
-        const planned    = projectData.filter(p => p.status === 'Planned').length;
-        const inProgress = projectData.filter(p => p.status === 'In Progress').length;
-        const completed  = projectData.filter(p => p.status === 'Completed').length;
-
-        document.getElementById('statTotal').textContent      = total;
-        document.getElementById('statPlanned').textContent    = planned;
-        document.getElementById('statInProgress').textContent = inProgress;
-        document.getElementById('statCompleted').textContent  = completed;
+        document.getElementById('statTotal').textContent      = projectData.length;
+        document.getElementById('statPlanned').textContent    = projectData.filter(p => p.status === 'Planned').length;
+        document.getElementById('statInProgress').textContent = projectData.filter(p => p.status === 'In Progress').length;
+        document.getElementById('statCompleted').textContent  = projectData.filter(p => p.status === 'Completed').length;
     }
 
-    function formatDateDisplay(dateString) {
-        return new Date(dateString).toLocaleDateString('en-GB');
-    }
+    function formatDateDisplay(d) { return new Date(d).toLocaleDateString('en-GB'); }
 
-    function formatTimestamp(timestamp) {
-        return new Date(timestamp).toLocaleString('en-GB', {
-            day: '2-digit', month: 'short', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
+    function formatTimestamp(t) {
+        return new Date(t).toLocaleString('en-GB', {
+            day:'2-digit', month:'short', year:'numeric',
+            hour:'2-digit', minute:'2-digit'
         });
     }
 
-    function formatDate(dateString) {
-        const d = new Date(dateString);
-        return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    function formatDate(d) {
+        const dt = new Date(d);
+        return `${dt.getFullYear()}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}`;
     }
 
     function getStatusBadge(status) {
@@ -1062,25 +1035,23 @@
             'In Progress': 'badge-in-progress',
             'Completed'  : 'badge-completed'
         };
-        return `<span class="status-badge ${map[status] || ''}">${status}</span>`;
+        return `<span class="status-badge ${map[status]||''}">${status}</span>`;
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  DASHBOARD – LOAD DATA
-    // ════════════════════════════════════════════════════════════════
+    // ── Load data ────────────────────────────────────────────────────
     async function loadFromJSONBin() {
-        try {
-            document.getElementById('loadingMessage').style.display  = 'block';
-            document.getElementById('dashboardTable').style.display  = 'none';
+        document.getElementById('loadingMessage').style.display = 'block';
+        document.getElementById('dashboardTable').style.display = 'none';
 
-            const response = await fetch(
+        try {
+            const res = await fetch(
                 `https://api.jsonbin.io/v3/b/${CONFIG.DATA_BIN_ID}/latest`,
-                { method: 'GET', headers: { 'X-Master-Key': CONFIG.API_KEY } }
+                { headers: { 'X-Master-Key': CONFIG.API_KEY } }
             );
 
-            if (response.ok) {
-                const result = await response.json();
-                if (result.record && result.record.projects) {
+            if (res.ok) {
+                const result = await res.json();
+                if (result.record?.projects) {
                     projectData = result.record.projects;
                     updateStats();
                     resetFilters();
@@ -1091,46 +1062,39 @@
                     document.getElementById('loadingMessage').textContent = 'No data available';
                 }
             } else {
-                projectData = [];
                 document.getElementById('loadingMessage').textContent = 'Failed to load data';
             }
-        } catch (error) {
-            console.error('Error loading data:', error);
-            projectData = [];
+        } catch (err) {
+            console.error(err);
             document.getElementById('loadingMessage').textContent = 'Error loading data';
         }
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  DASHBOARD – HISTORY MODAL
-    // ════════════════════════════════════════════════════════════════
+    // ── History modal ────────────────────────────────────────────────
     function displayActivityHistory(project) {
-        const historyList = document.getElementById('activityHistoryList');
-        historyList.innerHTML = '';
+        const list = document.getElementById('activityHistoryList');
+        list.innerHTML = '';
 
-        if (!project.activityHistory || project.activityHistory.length === 0) {
-            historyList.innerHTML = '<p style="color:#000;">No activity recorded yet.</p>';
+        if (!project.activityHistory?.length) {
+            list.innerHTML = '<p style="color:#000;">No activity recorded yet.</p>';
             return;
         }
 
-        const sorted = [...project.activityHistory].sort(
-            (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-        );
-
-        sorted.forEach(activity => {
-            const item = document.createElement('div');
-            item.className = 'activity-item';
-            item.innerHTML = `
-                <div>
-                    ${getUserThumbnail(activity.user)}
-                    <span class="activity-user">${activity.user}</span>
-                    <span class="activity-time">${formatTimestamp(activity.timestamp)}</span>
-                </div>
-                <div class="activity-action"><strong>${activity.action}</strong></div>
-                ${activity.notes ? `<div style="margin-top:5px;color:#000;">${activity.notes}</div>` : ''}
-            `;
-            historyList.appendChild(item);
-        });
+        [...project.activityHistory]
+            .sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item';
+                item.innerHTML = `
+                    <div>${getUserThumbnail(activity.user)}
+                        <span class="activity-user">${activity.user}</span>
+                        <span class="activity-time">${formatTimestamp(activity.timestamp)}</span>
+                    </div>
+                    <div class="activity-action"><strong>${activity.action}</strong></div>
+                    ${activity.notes ? `<div style="margin-top:5px;color:#000;">${activity.notes}</div>` : ''}
+                `;
+                list.appendChild(item);
+            });
     }
 
     function openHistoryModal(uniqueNumber) {
@@ -1156,9 +1120,7 @@
         document.getElementById('historyModal').style.display = 'none';
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  DASHBOARD – FILTERS
-    // ════════════════════════════════════════════════════════════════
+    // ── Filters ──────────────────────────────────────────────────────
     function applyFilters() {
         const congress    = document.getElementById('filterCongress').value;
         const status      = document.getElementById('filterStatus').value;
@@ -1166,34 +1128,24 @@
         const submittedBy = document.getElementById('filterSubmittedBy').value;
 
         filteredData = projectData.filter(p => {
-            let match = true;
-            if (congress    && p.congressName  !== congress)    match = false;
-            if (status      && p.status        !== status)      match = false;
-            if (requestor   && p.requestorName !== requestor)   match = false;
-            if (submittedBy && p.submittedBy   !== submittedBy) match = false;
-            return match;
+            if (congress    && p.congressName  !== congress)    return false;
+            if (status      && p.status        !== status)      return false;
+            if (requestor   && p.requestorName !== requestor)   return false;
+            if (submittedBy && p.submittedBy   !== submittedBy) return false;
+            return true;
         });
 
         loadDashboard();
     }
 
     function resetFilters() {
-        document.getElementById('filterCongress').value    = '';
-        document.getElementById('filterStatus').value      = '';
-        document.getElementById('filterRequestor').value   = '';
-        document.getElementById('filterSubmittedBy').value = '';
+        ['filterCongress','filterStatus','filterRequestor','filterSubmittedBy']
+            .forEach(id => document.getElementById(id).value = '');
         filteredData = projectData;
         loadDashboard();
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  DASHBOARD – RENDER TABLE
-    // ════════════════════════════════════════════════════════════════
-    function getActionButtons(project) {
-        return `<button class="action-btn history-btn"
-                    onclick="openHistoryModal('${project.uniqueNumber}')">View Details</button>`;
-    }
-
+    // ── Render table ─────────────────────────────────────────────────
     function loadDashboard() {
         const tbody = document.getElementById('dashboardBody');
         tbody.innerHTML = '';
@@ -1204,43 +1156,43 @@
             document.getElementById('filterRequestor').value   ||
             document.getElementById('filterSubmittedBy').value;
 
-        const dataToDisplay = anyFilter ? filteredData : projectData;
+        const data = anyFilter ? filteredData : projectData;
 
-        if (dataToDisplay.length === 0) {
+        if (!data.length) {
             tbody.innerHTML = `<tr><td colspan="10"
                 style="text-align:center;color:#000;">No data available</td></tr>`;
             return;
         }
 
-        const sorted = [...dataToDisplay].sort(
-            (a, b) => new Date(b.submittedDate) - new Date(a.submittedDate)
-        );
-
-        sorted.forEach(project => {
-            const row = tbody.insertRow();
-            row.innerHTML = `
-                <td><span class="unique-number-badge">${project.uniqueNumber}</span></td>
-                <td>${project.jobId}</td>
-                <td>${project.projectName}</td>
-                <td>${project.congressName}</td>
-                <td>${getUserWithThumbnail(project.requestorName)}</td>
-                <td>${getUserWithThumbnail(project.submittedBy)}</td>
-                <td>${getStatusBadge(project.status)}</td>
-                <td>${formatDateDisplay(project.startDate)}</td>
-                <td>${formatDateDisplay(project.endDate)}</td>
-                <td style="min-width:150px;">${getActionButtons(project)}</td>
-            `;
-        });
+        [...data]
+            .sort((a,b) => new Date(b.submittedDate) - new Date(a.submittedDate))
+            .forEach(project => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td><span class="unique-number-badge">${project.uniqueNumber}</span></td>
+                    <td>${project.jobId}</td>
+                    <td>${project.projectName}</td>
+                    <td>${project.congressName}</td>
+                    <td>${getUserWithThumbnail(project.requestorName)}</td>
+                    <td>${getUserWithThumbnail(project.submittedBy)}</td>
+                    <td>${getStatusBadge(project.status)}</td>
+                    <td>${formatDateDisplay(project.startDate)}</td>
+                    <td>${formatDateDisplay(project.endDate)}</td>
+                    <td style="min-width:150px;">
+                        <button class="action-btn history-btn"
+                            onclick="openHistoryModal('${project.uniqueNumber}')">
+                            View Details
+                        </button>
+                    </td>
+                `;
+            });
     }
 
     function refreshData() { loadFromJSONBin(); }
 
-    // ════════════════════════════════════════════════════════════════
-    //  EXPORT
-    // ════════════════════════════════════════════════════════════════
+    // ── Export ───────────────────────────────────────────────────────
     function exportToCSV() {
-        if (projectData.length === 0) { alert('No data to export'); return; }
-
+        if (!projectData.length) { alert('No data to export'); return; }
         const headers = ['Unique Number','Job ID','Project Name','Congress',
                          'Requestor','Submitted By','Status','Start Date','End Date','Description'];
         const csv = [
@@ -1253,17 +1205,16 @@
         ].join('\n');
 
         const a = document.createElement('a');
-        a.href     = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        a.href     = URL.createObjectURL(new Blob([csv], { type:'text/csv' }));
         a.download = `all_jobs_${formatDate(new Date())}.csv`;
         a.click();
     }
 
     function exportToExcel() {
-        if (projectData.length === 0) { alert('No data to export'); return; }
-
+        if (!projectData.length) { alert('No data to export'); return; }
         const headers = ['Unique Number','Job ID','Project','Congress',
                          'Requestor','Submitted By','Status','Start Date','End Date'];
-        let html = '<table><thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+        let html = '<table><thead><tr>' + headers.map(h=>`<th>${h}</th>`).join('') + '</tr></thead><tbody>';
         projectData.forEach(p => {
             html += `<tr>
                 <td>${p.uniqueNumber}</td><td>${p.jobId}</td>
@@ -1275,27 +1226,21 @@
         html += '</tbody></table>';
 
         const a = document.createElement('a');
-        a.href     = URL.createObjectURL(new Blob([html], { type: 'application/vnd.ms-excel' }));
+        a.href     = URL.createObjectURL(new Blob([html], { type:'application/vnd.ms-excel' }));
         a.download = `all_jobs_${formatDate(new Date())}.xls`;
         a.click();
     }
 
-    // Close modal on outside click
     window.onclick = e => {
         if (e.target === document.getElementById('historyModal'))
             document.getElementById('historyModal').style.display = 'none';
     };
 
-    // ════════════════════════════════════════════════════════════════
-    //  INIT – check existing session on page load
-    // ════════════════════════════════════════════════════════════════
+    // ── Init ─────────────────────────────────────────────────────────
     window.addEventListener('load', () => {
         const saved = sessionStorage.getItem('loggedInUser');
-        if (saved) {
-            showDashboard(saved);   // already logged in → go straight to dashboard
-        } else {
-            showLogin();            // show login screen
-        }
+        if (saved) showDashboard(saved);
+        else       showLogin();
     });
 </script>
 </body>
